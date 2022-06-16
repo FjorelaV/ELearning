@@ -16,7 +16,7 @@ const Server = () => {
   App.use(Router);
 
   App.listen(3000, () => {
-    console.log("Server started");
+    console.log("Server has started");
   });
 };
 
