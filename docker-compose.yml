@@ -1,0 +1,38 @@
+version: "3.8"
+
+services:
+  elearning_backend:
+    container_name: elearning_backend
+    build:
+      context: .
+      dockerfile: ./.docker/backend/Dockerfile
+    working_dir: /usr/src/elearning_backend
+    restart: on-failure
+    ports:
+      - 3000:3000
+    volumes:
+      - /usr/src/elearning_backend/node_modules
+      - ./:/usr/src/elearning_backend
+    networks:
+      - elearning_network
+
+  elearning_database:
+    container_name: elearning_database
+    image: mysql:latest
+    platform: linux/x86_64
+    restart: on-failure
+    volumes:
+      - ./.docker/database/mysql:/var/lib/mysql
+    ports:
+      - 3360:3306
+    environment:
+      MYSQL_DATABASE: elearning_database
+      MYSQL_ROOT_PASSWORD: fjorela
+      MYSQL_USER: fjorela
+      MYSQL_PASSWORD: fjorela
+    networks:
+      - elearning_network
+
+networks:
+  elearning_network:
+    driver: bridge
